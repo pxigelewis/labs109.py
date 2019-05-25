@@ -1,0 +1,233 @@
+#QESTION 1
+
+def ryerson_letter_grade(pct):
+
+    grade = pct
+    
+    if grade >= 90 and grade <= 150:
+        return ('A+')
+    elif grade >= 85 and grade <= 89:
+        return ('A')
+    elif grade >= 80 and grade <= 84:
+        return ('A-')
+    elif grade >= 77 and grade <= 79:
+        return ('B+') 
+    elif grade >= 73 and grade <= 76:
+        return ('B')
+    elif grade >= 70 and grade <= 72:
+        return ('B-')
+    elif grade >= 67 and grade <= 69:
+        return ('C+')
+    elif grade >= 63 and grade <= 66:
+        return ('C')
+    elif grade >= 60 and grade <= 62:
+        return ('C-')
+    elif grade >= 57 and grade <= 59:
+        return ('D+') 
+    elif grade >= 53 and grade <= 56:
+        return ('D')
+    elif grade >= 50 and grade <= 52:
+        return ('D-')
+    elif grade >= 0 and grade <= 49:
+        return ('F')
+
+
+
+#QUESTION 2    
+
+def is_ascending(items):
+    is_asc = True
+    for x in range(len(items) - 1):
+        t = items[x+1] - items[x]
+        if not t > 0:
+            is_asc = False
+            break
+    return is_asc
+           
+              
+
+#QUESTION 3
+
+list1 = []
+
+def  only_odd_digits(n):
+    digits = [int(i) for i in str(n)]
+    print(digits)                           
+    ans = True
+    for digit in digits:
+        if digit % 2 == 0 or digit == 0:                         
+            ans = False
+            break
+    return ans
+
+
+
+#QUESTION 4
+    
+def prime_factors(n): 
+    primfac = []
+    d = 2
+    while d*d <= n:
+        while (n % d) == 0:
+            primfac.append(d)
+            n //= d
+        d += 1
+    if n > 1:
+           primfac.append(n)
+    return primfac
+
+
+#QUESTION 5
+    
+def first_missing_positive(items):
+    if not items:
+        return 1
+    for index, value in enumerate(items):
+        if len(items) < value <= 0:
+            continue
+        while index + 1 != items[index] and 0 < items[index] <= len(items):
+            v = items[index]
+            items[index], items[v-1] = items[v-1], items[index]
+            items[v-1] = v
+            if items[index] == items[v-1]:
+                break
+    for index, value in enumerate(items, 1):
+        if value != index:
+            return index
+    return len(items) + 1
+
+
+#QUESTION 6
+    
+def is_permutation(items, n):
+    counter = [0]*len(items)
+    limit = len(items)
+    for element in items:
+        if not 1 <= element <= limit:
+            return False
+        else:
+            if counter[element-1] != 0:
+                return False
+            else:
+                counter[element-1] = 1
+    return True
+
+
+#QUESTION 7
+    
+def hand_is_badugi(hand):
+    rank = []
+    suit = []
+    for a, b in hand:
+        rank.append(a)
+        suit.append(b)
+    rankset = list(set(rank))
+    suitset = list(set(suit))
+    if len(rank) == len(rankset) and len(suit) == len(suitset):
+        return True
+    else:
+        return False
+
+        
+    
+#QUESTION 8
+        
+def group_equal(items):
+    import itertools
+    n = len(items)
+    for i in range(n):
+        return [list(j) for i, j in itertools.groupby(items)]
+
+
+#QUESTION 9
+        
+def running_median_of_three(items):
+    import statistics
+    med = []
+    firsttwoitems = items[0:2]
+    if len(items) <= 2:
+        return items
+    if len(items) > 2:
+        for i in range(len(items)):
+            med.append(statistics.median(items[i:i+3]))
+            x = firsttwoitems + med
+        return x[:-2]
+    
+#QUESTION 10
+
+def collapse_intervals(items):
+    prev = min(items) if items else None
+    n = list()
+    for number in sorted(items):
+        if number != prev+1:
+            n.append([number])
+        elif len(n[-1]) > 1:
+            n[-1][-1] = number
+        else:
+            n[-1].append(number)
+        prev = number
+    return ','.join(['-'.join(map(str, list_item)) for list_item in n])
+
+
+#QUESTION 11
+    
+def reverse_reversed(items):
+    if isinstance(items, list):
+        return list(reverse_reversed(x) for x in reversed(items))
+    else:
+        return items
+    
+    
+#QUESTION 12
+        
+def count_carries(a, b):
+    func = lambda n:sum(map(int,str(n)));
+    return int((func(a) + func(b) -func(a+b)) / 9)
+
+
+#QUESTION 13
+    
+def count_and_say(digits):
+    from itertools import groupby
+    string = digits
+    [list(k) for k, g in groupby(string)]
+    order =''.join(['{}{}'.format(sum(1 for _ in g), k) for k,g in groupby(string)])
+    return order
+
+
+#QUESTION 14
+    
+def create_zigzag(rows, cols, start=1):
+    grid = []
+    for row in range(rows):
+        begin = start + row * cols
+        end = begin + cols
+        r = list(range(begin, end))
+        grid.append(r if row % 2 == 0 else r[::-1])
+    return grid
+
+
+#QUESTION 15
+
+def all_cyclic_shifts(text):
+    a = 0
+    b = list(text)
+    result = []
+    while a < len(b):
+        b.append(b.pop(0))           
+        c = "".join(b)
+        result.append(c)
+        a+=1
+    return sorted(list(set(result)))
+
+
+#QUESTION 16
+    
+def count_consecutive_summers(n):
+    ans = 0
+    for a in range(1, 2*n + 1):
+        if 2*n % a == 0:
+            y = 2 * n / a - a - 1
+            if y % 2 == 0 and y >= 0:
+                ans += 1
+    return ans
